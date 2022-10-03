@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: micronautAWSTemplate2
+  metrics:
+    enabled: true
+    export:
+      cloudwatch:
+        enabled: true
+  session:
+    http:
+      cookie: true
+      header: true
+netty:
+  default:
+    allocator:
+      max-order: 3
