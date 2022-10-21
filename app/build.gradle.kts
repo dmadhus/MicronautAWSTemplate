@@ -18,7 +18,7 @@ repositories {
 
 allOpen {
     //this makes AOP work as it makes classes non-final :)
-    annotations("io.micronaut.http.annotation.Controller")
+    annotations("io.micronaut.http.annotation.Controller", "io.micronaut.core.annotation.Introspected")
 }
 
 dependencies {
@@ -33,6 +33,13 @@ dependencies {
     implementation("io.micronaut:micronaut-session")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+
+    //bean validation support https://docs.micronaut.io/latest/guide/index.html#beanValidation
+    implementation("io.micronaut:micronaut-validation")
+    //If you need full JSR380 support then use the Hibernate version of the validator
+    //implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+
+
     implementation("io.micronaut.micrometer:micronaut-micrometer-core")
     //use the plain micrometer registry for cloudwatch
     implementation("io.micrometer:micrometer-registry-cloudwatch2:1.9.5")

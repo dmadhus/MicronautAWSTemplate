@@ -4,15 +4,27 @@ import com.bytestream.model.ddb.PersonEntity
 import com.bytestream.service.PersonService
 import io.micrometer.core.annotation.Timed
 import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.serde.annotation.Serdeable
+import javax.validation.Valid
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 
 //https://micronaut-projects.github.io/micronaut-serialization/1.0.x/guide/
 @Serdeable //Allow Micronaut to serialize this in the controller
-data class Person(val firstName: String, val lastName: String, val age: Int, val favoriteColor: String) {
+data class Person(
+    //add some validations
+    @field:NotEmpty @field:Size(min = 2, max = 10) val firstName: String,
+    @field:NotEmpty @field:Size(min = 2, max = 10)  val lastName: String,
+    @field:Min(18) @field:Max(110) val age: Int,
+    @field:Size(min = 3, max = 8)val favoriteColor: String
+    ) {
     fun toPersonEntity(): PersonEntity {
         val current = this
         return PersonEntity().apply {
@@ -52,12 +64,10 @@ class HelloController(val personService: PersonService) {
     }
 
 
-    /**
-     * Yes this should be a post but this makes it easier to test from the url bar
-     */
     @Timed
     @Post("people/add", produces = [MediaType.APPLICATION_JSON])
-    fun addPerson(person: Person): Person {
+    //Adds valid person or throws a validation error
+    fun addPerson(@Valid @Body person: Person): Person {
         personService.addPerson(person.toPersonEntity())
         return person
     }

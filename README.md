@@ -17,6 +17,7 @@
 - [ ] Code coverage
 - [ ] Interceptor example
 - [X] ~~Validate startup script~~
+- [X] ~~JSR 380 example (validation)~~
 
 
 ## Micronaut 3.7.1 Documentation
