@@ -1,21 +1,22 @@
 ## TODOS
 
-- [ ] Swagger
+- [X] ~~Swagger~~  Can be found at http://localhost:8080/swagger-ui
 - [ ] Local dev config for metrics? Can be expensive
 - [ ] Dashboard/Alarm example
 - [ ] S3 example
 - [ ] Unit test
 - [ ] Mutation testing
-- [X] CDK Setup
-- [X] DDB Integration
-- [X] Cloudwatch
-- [x] Application based role
-- [x] Sample controller
-- [x] Simple example
+- [X] ~~CDK Setup~~  
+- [X] ~~DDB Integration~~
+- [X] ~~Cloudwatch~~
+- [x] ~~Application based role~~
+- [x] ~~Sample controller~~
+- [x] ~~Simple example~~
 - [ ] Documentation on logs
 - [ ] Determine local vs AWS Runtime
 - [ ] Code coverage
 - [ ] Interceptor example
+- [X] ~~Validate startup script~~
 
 
 ## Micronaut 3.7.1 Documentation
@@ -39,9 +40,15 @@
 
 ```
 ./gradlew build
+
+deployable artifact can be found in 
+app/build/distributions
+
+The zip file will have a bin folder with a script
+
 ```
 
-### Deploy
+### Deploy Infra
 
 The `infra/cdk.json` file tells the CDK Toolkit how to execute your app.
 

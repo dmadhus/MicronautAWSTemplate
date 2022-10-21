@@ -4,7 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.6.2"
-    id("io.micronaut.aot") version "3.6.2"
+    //enable to add compile time optimizations, will increase build time to reduce startup time
+    //id("io.micronaut.aot") version "3.6.2"
 }
 
 version = "0.1"
@@ -24,11 +25,12 @@ dependencies {
     kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.micrometer:micronaut-micrometer-annotation")
     kapt("io.micronaut.serde:micronaut-serde-processor")
+    kapt("io.micronaut.openapi:micronaut-openapi:4.5.2")
+    implementation("io.swagger.core.v3:swagger-annotations")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-session")
-    //implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.micrometer:micronaut-micrometer-core")
@@ -62,11 +64,12 @@ dependencies {
 
 
 application {
-    mainClass.set("com.bytestream.ApplicationKt")
+    mainClass.set("com.bytestream.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
 }
+
 
 tasks {
     compileKotlin {
@@ -88,17 +91,17 @@ micronaut {
         incremental(true)
         annotations("com.bytestream.*")
     }
-    aot {
+   // aot {
         // Please review carefully the optimizations enabled below
         // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading.set(true)
+        //optimizeServiceLoading.set(true)
         //convertYamlToJava.set(true)
-        precomputeOperations.set(true)
+        //precomputeOperations.set(true)
         //cacheEnvironment.set(true)
-        optimizeClassLoading.set(true)
+        //optimizeClassLoading.set(true)
         //deduceEnvironment.set(true) https://github.com/micronaut-projects/micronaut-aot/blob/master/aot-std-optimizers/src/main/java/io/micronaut/aot/std/sourcegen/DeduceEnvironmentSourceGenerator.java
-        optimizeNetty.set(true)
-    }
+        //optimizeNetty.set(true)
+   // }
 }
 
 

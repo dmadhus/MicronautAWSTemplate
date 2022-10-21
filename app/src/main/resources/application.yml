@@ -1,3 +1,10 @@
+
+#Options for nice debug endpoints
+# https://docs.micronaut.io/latest/guide/#providedEndpoints
+endpoints:
+  routes:
+    enabled: true
+    sensitive: false
 micronaut:
   application:
     name: MicronautAWSTemplate
@@ -13,6 +20,18 @@ micronaut:
         enabled: false
       jdbc:
         enabled: false
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/*
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+        #For some reason the swagger UI fails to load with 404 trying to look into res, adding res explicitly fixes it
+      res:
+        paths: classpath:META-INF/swagger/views/swagger-ui/res
+        mapping: /res/**
 
   session:
     http:
