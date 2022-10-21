@@ -1,5 +1,5 @@
 
-rootProject.name="MicronautAWSTemplate2"
+rootProject.name="MicronautAWSTemplate"
 
 include("app")
 include("infra")

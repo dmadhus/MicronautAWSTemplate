@@ -1,6 +1,0 @@
-applicationType: default
-defaultPackage: com.bytestream
-testFramework: kotest
-sourceLanguage: kotlin
-buildTool: gradle_kotlin
-features: [annotation-api, app-name, aws-cdk, aws-codebuild-workflow-ci, aws-v2-sdk, dynamodb, graalvm, gradle, http-client, http-session, jackson-databind, kotest, kotlin, kotlin-application, kotlin-build, kotlin-extension-functions, logback, management, micrometer, micrometer-annotation, micrometer-cloudwatch, micronaut-aot, micronaut-build, netty-server, object-storage-aws, readme, serialization-jackson, shade, yaml]

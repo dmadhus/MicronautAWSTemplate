@@ -15,6 +15,11 @@ repositories {
     mavenCentral()
 }
 
+allOpen {
+    //this makes AOP work as it makes classes non-final :)
+    annotations("io.micronaut.http.annotation.Controller")
+}
+
 dependencies {
     kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.micrometer:micronaut-micrometer-annotation")
@@ -23,26 +28,34 @@ dependencies {
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-session")
-    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
+    //implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.micrometer:micronaut-micrometer-core")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-cloudwatch")
-    implementation("io.micronaut.objectstorage:micronaut-object-storage-aws")
+    //use the plain micrometer registry for cloudwatch
+    implementation("io.micrometer:micrometer-registry-cloudwatch2:1.9.5")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    implementation("software.amazon.awssdk:dynamodb") {
-      exclude(group = "software.amazon.awssdk", module = "apache-client")
-      exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
+
+    //https://aws.amazon.com/blogs/developer/introducing-enhanced-dynamodb-client-in-the-aws-sdk-for-java-v2/
+    implementation("software.amazon.awssdk:dynamodb-enhanced:2.17.295"){
+            exclude(group = "software.amazon.awssdk", module = "apache-client")
+            exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
+
     }
-    implementation("software.amazon.awssdk:url-connection-client")
+    implementation("software.amazon.awssdk:auth:2.17.295"){
+        exclude(group = "software.amazon.awssdk", module = "apache-client")
+        exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
+    }
+    implementation("software.amazon.awssdk:sts:2.17.295"){
+        exclude(group = "software.amazon.awssdk", module = "apache-client")
+        exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
+    }
     runtimeOnly("ch.qos.logback:logback-classic")
     compileOnly("org.graalvm.nativeimage:svm")
-
     implementation("io.micronaut:micronaut-validation")
-
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 }
@@ -52,18 +65,18 @@ application {
     mainClass.set("com.bytestream.ApplicationKt")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("11")
 }
 
 tasks {
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "11"
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "11"
         }
     }
 }
@@ -79,11 +92,11 @@ micronaut {
         // Please review carefully the optimizations enabled below
         // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading.set(true)
-        convertYamlToJava.set(true)
+        //convertYamlToJava.set(true)
         precomputeOperations.set(true)
-        cacheEnvironment.set(true)
+        //cacheEnvironment.set(true)
         optimizeClassLoading.set(true)
-        deduceEnvironment.set(true)
+        //deduceEnvironment.set(true) https://github.com/micronaut-projects/micronaut-aot/blob/master/aot-std-optimizers/src/main/java/io/micronaut/aot/std/sourcegen/DeduceEnvironmentSourceGenerator.java
         optimizeNetty.set(true)
     }
 }

@@ -1,11 +1,19 @@
 micronaut:
   application:
-    name: micronautAWSTemplate2
+    name: MicronautAWSTemplate
+    #https://micronaut-projects.github.io/micronaut-micrometer/latest/guide/#metricsAnnotations
   metrics:
     enabled: true
-    export:
-      cloudwatch:
-        enabled: true
+    binders:
+      processor:
+        enabled: false
+      uptime:
+        enabled: false
+      logback:
+        enabled: false
+      jdbc:
+        enabled: false
+
   session:
     http:
       cookie: true
@@ -14,3 +22,11 @@ netty:
   default:
     allocator:
       max-order: 3
+
+#These are the values from the CDK stack
+aws:
+  region: "us-west-1"
+  appRoleArn: "arn:aws:iam::035898927414:role/appRole"
+
+ddbtablenames:
+  person: people

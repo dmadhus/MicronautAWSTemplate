@@ -1,3 +1,23 @@
+## TODOS
+
+- [ ] Swagger
+- [ ] Local dev config for metrics? Can be expensive
+- [ ] Dashboard/Alarm example
+- [ ] S3 example
+- [ ] Unit test
+- [ ] Mutation testing
+- [X] CDK Setup
+- [X] DDB Integration
+- [X] Cloudwatch
+- [x] Application based role
+- [x] Sample controller
+- [x] Simple example
+- [ ] Documentation on logs
+- [ ] Determine local vs AWS Runtime
+- [ ] Code coverage
+- [ ] Interceptor example
+
+
 ## Micronaut 3.7.1 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.7.1/guide/index.html)
@@ -10,6 +30,7 @@
 
 - [AWS Account](https://aws.amazon.com/free/)
 - [CDK CLI](https://docs.aws.amazon.com/cdk/v2/guide/cli.html)
+- - depends on https://nodejs.org/en/download/
 - [AWS CLI](https://aws.amazon.com/cli/)
 
 ## How to deploy
@@ -17,8 +38,7 @@
 ### Generate the deployable artifact
 
 ```
-./gradlew :app:buildNativeLambda
-./gradlew test
+./gradlew build
 ```
 
 ### Deploy
@@ -55,20 +75,6 @@ cd ..
 - [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
 
 
-## Feature aws-v2-sdk documentation
-
-- [Micronaut AWS SDK 2.x documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/)
-
-- [https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html](https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html)
-
-
-## Feature object-storage-aws documentation
-
-- [Micronaut Object Storage - AWS documentation](https://micronaut-projects.github.io/micronaut-object-storage/latest/guide/)
-
-- [https://aws.amazon.com/s3/](https://aws.amazon.com/s3/)
-
-
 ## Feature micronaut-aot documentation
 
 - [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
@@ -85,8 +91,8 @@ cd ..
 
 
 ## Feature dynamodb documentation
-
-- [Micronaut Amazon DynamoDB documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)
+  
+- Not Used: [Micronaut Amazon DynamoDB documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)
 
 - [https://aws.amazon.com/dynamodb/](https://aws.amazon.com/dynamodb/)
 

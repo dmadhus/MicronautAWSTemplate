@@ -1,8 +1,9 @@
 package com.bytestream
 
-import io.micronaut.runtime.Micronaut.*
+import io.micronaut.runtime.Micronaut
+
 
 fun main(args: Array<String>) {
-	run(*args)
+    Micronaut.build().eagerInitConfiguration(true).eagerInitSingletons(true).args(*args).start()
 }
 
