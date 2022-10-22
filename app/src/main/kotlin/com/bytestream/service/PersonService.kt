@@ -1,11 +1,13 @@
 package com.bytestream.service
 
 import com.bytestream.model.ddb.PersonEntity
+import io.micronaut.context.annotation.Requires
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable
 import software.amazon.awssdk.enhanced.dynamodb.Key
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional
+
 
 @Singleton
 class PersonService(@Inject val personEntityTable: DynamoDbTable<PersonEntity>) {

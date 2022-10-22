@@ -4,7 +4,7 @@
 - [ ] Local dev config for metrics? Can be expensive
 - [ ] Dashboard/Alarm example
 - [ ] S3 example
-- [ ] Unit test
+- [X] ~~Unit test~~
 - [ ] Mutation testing
 - [X] ~~CDK Setup~~  
 - [X] ~~DDB Integration~~
@@ -14,7 +14,7 @@
 - [x] ~~Simple example~~
 - [ ] Documentation on logs
 - [ ] Determine local vs AWS Runtime
-- [ ] Code coverage
+- [X] ~~Code coverage~~
 - [ ] Interceptor example
 - [X] ~~Validate startup script~~
 - [X] ~~JSR 380 example (validation)~~

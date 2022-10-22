@@ -6,6 +6,7 @@ import io.micrometer.core.instrument.Clock
 import io.micrometer.core.instrument.MeterRegistry
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Property
+import io.micronaut.context.annotation.Requires
 import jakarta.inject.Singleton
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient
@@ -18,6 +19,7 @@ import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 import java.time.Duration
 import java.util.*
 
+@Requires(notEnv = ["test"]) //will not load these configs for test
 @Factory
 class AWSResourceProvider {
 

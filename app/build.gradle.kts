@@ -6,6 +6,8 @@ plugins {
     id("io.micronaut.application") version "3.6.2"
     //enable to add compile time optimizations, will increase build time to reduce startup time
     //id("io.micronaut.aot") version "3.6.2"
+    id("jacoco")
+    id("info.solidsoft.pitest") version "1.7.0"
 }
 
 version = "0.1"
@@ -50,8 +52,8 @@ dependencies {
 
     //https://aws.amazon.com/blogs/developer/introducing-enhanced-dynamodb-client-in-the-aws-sdk-for-java-v2/
     implementation("software.amazon.awssdk:dynamodb-enhanced:2.17.295"){
-            exclude(group = "software.amazon.awssdk", module = "apache-client")
-            exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
+        exclude(group = "software.amazon.awssdk", module = "apache-client")
+        exclude(group = "software.amazon.awssdk", module = "netty-nio-client")
 
     }
     implementation("software.amazon.awssdk:auth:2.17.295"){
@@ -67,6 +69,10 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    testImplementation("io.kotest:kotest-assertions-json:4.6.4")
+    //testImplementation("io.kotest:kotest-runner-junit5:5.5.1")
+    //testImplementation("io.kotest:kotest-assertions-core:5.5.1")
+
 }
 
 
@@ -77,6 +83,18 @@ java {
     sourceCompatibility = JavaVersion.toVersion("11")
 }
 
+
+
+tasks.test {
+    configure<JacocoTaskExtension> {
+        isEnabled = true
+        excludes = listOf("com/bytestream/config/**")
+        excludeClassLoaders = emptyList()
+        isIncludeNoLocationClasses = false
+        output = JacocoTaskExtension.Output.FILE
+    }
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
 
 tasks {
     compileKotlin {
@@ -90,6 +108,39 @@ tasks {
         }
     }
 }
+
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+
+    classDirectories.setFrom(classDirectories.files.map {
+        fileTree(it).matching {
+            exclude("com/bytestream/config/**")
+            exclude("com/bytestream/Application.class")
+        }
+    })
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            classDirectories.setFrom(tasks.jacocoTestReport.get().classDirectories)
+            limit {
+                minimum = "0.9".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check{
+    dependsOn(tasks.jacocoTestReport, tasks.jacocoTestCoverageVerification)
+}
+
+
+jacoco {
+    toolVersion = "0.8.7"
+}
 graalvmNative.toolchainDetection.set(false)
 micronaut {
     runtime("netty")
@@ -98,17 +149,17 @@ micronaut {
         incremental(true)
         annotations("com.bytestream.*")
     }
-   // aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        //optimizeServiceLoading.set(true)
-        //convertYamlToJava.set(true)
-        //precomputeOperations.set(true)
-        //cacheEnvironment.set(true)
-        //optimizeClassLoading.set(true)
-        //deduceEnvironment.set(true) https://github.com/micronaut-projects/micronaut-aot/blob/master/aot-std-optimizers/src/main/java/io/micronaut/aot/std/sourcegen/DeduceEnvironmentSourceGenerator.java
-        //optimizeNetty.set(true)
-   // }
+    // aot {
+    // Please review carefully the optimizations enabled below
+    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+    //optimizeServiceLoading.set(true)
+    //convertYamlToJava.set(true)
+    //precomputeOperations.set(true)
+    //cacheEnvironment.set(true)
+    //optimizeClassLoading.set(true)
+    //deduceEnvironment.set(true) https://github.com/micronaut-projects/micronaut-aot/blob/master/aot-std-optimizers/src/main/java/io/micronaut/aot/std/sourcegen/DeduceEnvironmentSourceGenerator.java
+    //optimizeNetty.set(true)
+    // }
 }
 
 
@@ -116,7 +167,6 @@ micronaut {
 configurations.all {
     resolutionStrategy.dependencySubstitution {
         substitute(module("io.micronaut:micronaut-jackson-databind"))
-            .using(module("io.micronaut.serde:micronaut-serde-jackson:1.3.2"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.3.2"))
     }
 }
-
