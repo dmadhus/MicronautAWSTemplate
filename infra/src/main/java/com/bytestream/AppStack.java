@@ -25,7 +25,7 @@ public class AppStack extends Stack {
 
         //you should create and define users here
         //I already have a user created, and I am simply getting a reference
-        var myUser = User.fromUserName(this, "erickUser", "ericktest");
+        var myUser = User.fromUserName(this, "madhu", "madhu");
 
         //create application specific roles and grant users accesse to jump into the roles
         var appRole = new Role(this, "appRole", RoleProps.builder()

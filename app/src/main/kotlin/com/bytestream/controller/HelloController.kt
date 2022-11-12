@@ -39,6 +39,7 @@ data class Person(
 fun PersonEntity.toPerson(): Person {
     //all fields are required by the controller for insert so this should be safe
     return Person(this.firstName!!, this.lastName!!, this.age!!, this.favoriteColor!!)
+
 }
 
 //needs to be open for the AOP to work, this is happening through all open in the gradle file

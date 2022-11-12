@@ -45,7 +45,7 @@ netty:
 #These are the values from the CDK stack
 aws:
   region: "us-west-1"
-  appRoleArn: "arn:aws:iam::035898927414:role/appRole"
+  appRoleArn: "arn:aws:iam::475393585810:role/appRole"
 
 ddbtablenames:
   person: people
